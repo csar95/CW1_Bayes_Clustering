@@ -108,5 +108,5 @@ venv.bak/
 *.pyc
 *.pdf
 .idea/
-Data/
+data/
 *.csv
