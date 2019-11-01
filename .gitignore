@@ -112,3 +112,4 @@ data/
 *.csv
 
 */bin/
+/.metadata/

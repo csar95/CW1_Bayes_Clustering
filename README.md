@@ -13,3 +13,4 @@ https://www.programcreek.com/java-api-examples/?api=weka.gui.graphvisualizer.Gra
 http://www.cs.tufts.edu/~ablumer/weka/doc/weka.classifiers.Evaluation.html
 http://weka.sourceforge.net/doc.stable/overview-summary.html
 https://www.programcreek.com/java-api-examples/?api=weka.classifiers.Evaluation
+https://towardsdatascience.com/gaussian-mixture-model-clusterization-how-to-select-the-number-of-components-clusters-553bef45f6e4

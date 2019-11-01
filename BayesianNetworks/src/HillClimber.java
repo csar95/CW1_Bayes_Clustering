@@ -7,12 +7,12 @@ import weka.gui.graphvisualizer.BIFFormatException;
 import weka.gui.graphvisualizer.GraphVisualizer;
 
 
-public class main {
+public class HillClimber {
 
 	public static void main(String[] args) throws Exception {
 		
 		// Read in file and create train dataset
-	    DataSource source = new DataSource("res/data_gr_5000.csv");
+	    DataSource source = new DataSource("res/data_top_10.csv");
 	    Instances data = source.getDataSet();
 	    data.setClassIndex(data.numAttributes() - 1);
 
@@ -27,8 +27,8 @@ public class main {
 	    weka.classifiers.bayes.BayesNet scheme = new weka.classifiers.bayes.BayesNet();
 	    scheme.setOptions(weka.core.Utils.splitOptions("-D"));
 	    
-	    weka.classifiers.bayes.net.search.local.K2 algorithm = new weka.classifiers.bayes.net.search.local.K2();
-	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 2 -S BAYES"));
+	    weka.classifiers.bayes.net.search.local.HillClimber algorithm = new weka.classifiers.bayes.net.search.local.HillClimber();
+	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 1 -S BAYES"));
 	    
 	    weka.classifiers.bayes.net.estimate.SimpleEstimator estimator = new weka.classifiers.bayes.net.estimate.SimpleEstimator();
 	    estimator.setOptions(weka.core.Utils.splitOptions("-A 0.5"));
