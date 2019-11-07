@@ -14,15 +14,7 @@ public class HillClimber {
 	public static void main(String[] args) throws Exception {
 		
 		// Read in file and create train dataset
-//	    DataSource trainSource = new DataSource("res/data_gr_1000.csv");
-//	    Instances trainData = trainSource.getDataSet();
-//	    trainData.setClassIndex(trainData.numAttributes() - 1);
-//
-//		DataSource testSource = new DataSource("res/data_gr_1000_test.csv");
-//		Instances testData = testSource.getDataSet();
-//		testData.setClassIndex(testData.numAttributes() - 1);
 		long start = System.currentTimeMillis();
-
 
 		DataSource source = new DataSource("res/data_top_10.csv");
 	    Instances data = source.getDataSet();

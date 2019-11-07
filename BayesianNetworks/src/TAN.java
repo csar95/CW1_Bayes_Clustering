@@ -13,10 +13,6 @@ public class TAN {
 	public static void main(String[] args) throws Exception {
 		
 		// Read in file and create train dataset
-//	    DataSource source = new DataSource("res/data_top_10.csv");
-//	    Instances data = source.getDataSet();
-//	    data.setClassIndex(data.numAttributes() - 1);
-
 		long start = System.currentTimeMillis();
 
 		DataSource source = new DataSource("res/data_top_10.csv");
