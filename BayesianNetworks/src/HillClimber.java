@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
+import java.util.Random;
 
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.filters.unsupervised.instance.Randomize;
 import weka.gui.graphvisualizer.BIFFormatException;
 import weka.gui.graphvisualizer.GraphVisualizer;
 
@@ -12,14 +14,24 @@ public class HillClimber {
 	public static void main(String[] args) throws Exception {
 		
 		// Read in file and create train dataset
-	    DataSource source = new DataSource("res/data_top_10.csv");
+//	    DataSource trainSource = new DataSource("res/data_gr_1000.csv");
+//	    Instances trainData = trainSource.getDataSet();
+//	    trainData.setClassIndex(trainData.numAttributes() - 1);
+//
+//		DataSource testSource = new DataSource("res/data_gr_1000_test.csv");
+//		Instances testData = testSource.getDataSet();
+//		testData.setClassIndex(testData.numAttributes() - 1);
+		long start = System.currentTimeMillis();
+
+
+		DataSource source = new DataSource("res/data_top_10.csv");
 	    Instances data = source.getDataSet();
 	    data.setClassIndex(data.numAttributes() - 1);
 
 	    int trainSetSize = Math.round((data.numInstances() * 66)/100);
 		int testSetSize = data.numInstances() - trainSetSize;
 
-		// data = randomizeSet(data);
+		data.randomize(new Random(42));
 		Instances train_data = new Instances(data, 0, trainSetSize);
 		Instances test_data = new Instances(data, trainSetSize, testSetSize);
 
@@ -28,7 +40,7 @@ public class HillClimber {
 	    scheme.setOptions(weka.core.Utils.splitOptions("-D"));
 	    
 	    weka.classifiers.bayes.net.search.local.HillClimber algorithm = new weka.classifiers.bayes.net.search.local.HillClimber();
-	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 1 -S BAYES"));
+	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 5 -S BAYES"));
 	    
 	    weka.classifiers.bayes.net.estimate.SimpleEstimator estimator = new weka.classifiers.bayes.net.estimate.SimpleEstimator();
 	    estimator.setOptions(weka.core.Utils.splitOptions("-A 0.5"));
@@ -46,7 +58,10 @@ public class HillClimber {
 	    System.out.println(eval.toClassDetailsString());
 	    System.out.println(eval.toMatrixString("=== Confusion Matrix ===\n"));
 		
-	    visualizeBayesNet(scheme.graph(), "K2");
+//	    visualizeBayesNet(scheme.graph(), "Hill Climber");
+
+		long end = System.currentTimeMillis();
+		System.out.println("Execution time: " + (end - start)/60000 + " minutes");
 	}
 	
 	/**
