@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.util.Random;
 
 import weka.classifiers.Evaluation;
 import weka.core.Instances;
@@ -12,14 +13,20 @@ public class K2 {
 	public static void main(String[] args) throws Exception {
 		
 		// Read in file and create train dataset
-	    DataSource source = new DataSource("res/data_gr_1000.csv");
-	    Instances data = source.getDataSet();
-	    data.setClassIndex(data.numAttributes() - 1);
+//	    DataSource source = new DataSource("res/data_gr_1000.csv");
+//	    Instances data = source.getDataSet();
+//	    data.setClassIndex(data.numAttributes() - 1);
 
-	    int trainSetSize = Math.round((data.numInstances() * 66)/100);
+		long start = System.currentTimeMillis();
+
+		DataSource source = new DataSource("res/data_gr.csv");
+		Instances data = source.getDataSet();
+		data.setClassIndex(data.numAttributes() - 1);
+
+		int trainSetSize = Math.round((data.numInstances() * 66)/100);
 		int testSetSize = data.numInstances() - trainSetSize;
 
-		// data = randomizeSet(data);
+		data.randomize(new Random(42));
 		Instances train_data = new Instances(data, 0, trainSetSize);
 		Instances test_data = new Instances(data, trainSetSize, testSetSize);
 
@@ -28,7 +35,7 @@ public class K2 {
 	    scheme.setOptions(weka.core.Utils.splitOptions("-D"));
 	    
 	    weka.classifiers.bayes.net.search.local.K2 algorithm = new weka.classifiers.bayes.net.search.local.K2();
-	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 2 -S BAYES"));
+	    algorithm.setOptions(weka.core.Utils.splitOptions("-P 3 -S BAYES"));
 	    
 	    weka.classifiers.bayes.net.estimate.SimpleEstimator estimator = new weka.classifiers.bayes.net.estimate.SimpleEstimator();
 	    estimator.setOptions(weka.core.Utils.splitOptions("-A 0.5"));
@@ -47,6 +54,9 @@ public class K2 {
 	    System.out.println(eval.toMatrixString("=== Confusion Matrix ===\n"));
 		
 	    //visualizeBayesNet(scheme.graph(), "K2");
+
+		long end = System.currentTimeMillis();
+		System.out.println("Execution time: " + (end - start)/60000 + " minutes");
 	}
 	
 	/**
